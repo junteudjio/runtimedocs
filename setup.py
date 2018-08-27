@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
+import codecs
+import os.path
+import re
 
-# Learn more: https://github.com/kennethreitz/setup.py
-
-from setuptools import setup, find_packages
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
 
 with open('README.rst') as f:
@@ -11,15 +15,36 @@ with open('README.rst') as f:
 with open('LICENSE') as f:
     license = f.read()
 
+def fpath(name):
+    return os.path.join(os.path.dirname(__file__), name)
+
+
+def read(fname):
+    return codecs.open(fpath(fname), encoding='utf-8').read()
+
+
+def grep(attrname):
+    pattern = r"{0}\W*=\W*'([^']+)'".format(attrname)
+    strval, = re.findall(pattern, file_text)
+    return strval
+
+
+file_text = read(fpath('runtimedocs/__init__.py'))
+
 setup(
     name='runtimedocs',
-    version='0.1.0',
-    description='Sample package for Python-Guide.org',
+    version=grep('__version__'),
+    description='Understanding how your code behaves at runtime made simple',
     long_description=readme,
-    author='Kenneth Reitz',
-    author_email='me@kennethreitz.com',
-    url='https://github.com/kennethreitz/samplemod',
+    author='Junior Teudjio',
+    author_email='jun.teudjio@gmail.com',
+    url='https://github.com/junteudjio/runtimedocs',
     license=license,
-    packages=find_packages(exclude=('tests', 'docs'))
+    packages=['runtimedocs'],
+    include_package_data=True,
+    install_requires=[
+
+    ],
+    tests_require=['tox']
 )
 
