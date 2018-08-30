@@ -1,5 +1,13 @@
 import inspect
-from collections import ChainMap, OrderedDict
+from collections import OrderedDict
+
+try:
+    from collections import ChainMap
+    signature_func = inspect.signature
+except ImportError:
+    from chainmap import ChainMap
+    from funcsigs import signature
+    signature_func = lambda x: str(signature(x))
 
 # try to import the runtimedocs_types_parsers plugin package to have more parsers for commonly used libraries like:
 # numpy, pandas, scipy, etc ...
@@ -25,8 +33,11 @@ def default_type_parser(arg, max_stringify=1000):
 def function_parser(arg):
     parsed = OrderedDict(type=get_type(arg))
     parsed['name'] = arg.__name__
-    parsed['signature'] = str(inspect.signature(arg))
-    parsed['fullargspec'] = str(inspect.getfullargspec(arg))
+    parsed['signature'] = str(signature_func(arg))
+    try:
+        parsed['fullargspec'] = str(inspect.getfullargspec(arg))
+    except Exception as e:
+        parsed['fullargspec'] = str(inspect.getargspec(arg))
     parsed['isbuiltin'] = inspect.isbuiltin(arg)
     #parsed['doc'] = inspect.getdoc(arg)
     return parsed

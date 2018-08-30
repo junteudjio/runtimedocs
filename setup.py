@@ -2,6 +2,7 @@
 import codecs
 import os.path
 import re
+import sys
 
 try:
     from setuptools import setup
@@ -31,6 +32,15 @@ def grep(attrname):
 
 file_text = read(fpath('runtimedocs/__init__.py'))
 
+if sys.version_info < (3,):
+    reqs = [
+        'mock==2.0.0',
+        'chainmap==1.0.2',
+        'funcsigs'
+    ]
+else:
+    reqs = []
+
 setup(
     name='runtimedocs',
     version=grep('__version__'),
@@ -42,9 +52,7 @@ setup(
     license=license,
     packages=['runtimedocs'],
     include_package_data=True,
-    install_requires=[
-
-    ],
+    install_requires=reqs,
     tests_require=['tox']
 )
 

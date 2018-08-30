@@ -1,4 +1,7 @@
 mock==2.0.0
+chainmap==1.0.2
+funcsigs
+
 pytest==3.7.4
 pytest-cov==2.5.1
 sphinx==1.3.5

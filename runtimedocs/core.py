@@ -1,9 +1,16 @@
 import os
 import time
 import inspect
-from collections import ChainMap
 from functools import wraps, partial
 import logging
+
+try:
+    from collections import ChainMap
+    signature_func = inspect.signature
+except ImportError:
+    from chainmap import ChainMap
+    from funcsigs import signature
+    signature_func = lambda x: str(signature(x))
 
 from runtimedocs import helpers
 from runtimedocs.helpers import get_type
@@ -203,7 +210,7 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
 
             logger.info('declared signature = {func_name}{signature}'.format(
                 func_name = func.__name__,
-                signature = inspect.signature(func)
+                signature = signature_func(func)
             ))
             logger.info('called   signature = {func_name}({all_args_str})'.format(
                 func_name=func.__name__,
