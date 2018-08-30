@@ -191,7 +191,7 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
         @wraps(func)
         def wrapper(*args, **kwargs):
             logger.info('#'*100)
-            logger.info('calling [{}] declared inside module [{}]'.format(func.__name__, __name__))
+            logger.info('calling [{}] declared inside module [{}]'.format(func.__name__, func.__module__))
             logger.info('caller name: [{}]'.format(caller_name()))
             logger.info('-'*100)
 
@@ -249,11 +249,9 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
         return wrapper
     return decorate
 
-
-
-if __name__ == '__main__':
-    @runtimedocs(verbosity=1)
-    def myadd(a, b, f=runtimedocs(verbosity=1)(sum), unused=1):
-        return f([a, b])
-    myadd(1, 2)
-    myadd(1, 2, f=sum)
+# if __name__ == '__main__':
+#     @runtimedocs(verbosity=1)
+#     def myadd(a, b, f=runtimedocs(verbosity=1)(sum), unused=1):
+#         return f([a, b])
+#     myadd(1, 2)
+#     myadd(1, 2, f=sum)
