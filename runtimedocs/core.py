@@ -19,18 +19,19 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
     
     It provides detailed information about:
      - what was the expected signature of a function/class.
+     - where was the function/class declared in and called from.
      - what was the actual signature used when calling that function/class at run time.
      - what are the types, names, values of the input parameters and returned values of that function.
      - when relevant also add specific information like their : len, signature, inheritance_tree, etc ...
      - what were the positional/key-word arguments at call time.
      - has the function exited successfully or ran into an exception.
-     - how long it took to run in case of success
+     - how long it took to run in case of success.
      - display what was the exception otherwise and raises it back to not side-effect your program.
     
     All these information are saved in a file usually named as follows: module_name.function_name.rundimedocs.log
-    Additionally the can be printed on the terminal if the verbosity level is set to 1.
+    Additionally they can be printed on the terminal if the verbosity level is set to 1.
     
-    You can easily toggle the runtimedocs decorator off by setting the env variable DISABLE_RUNTIMEDOCS to True
+    You can easily toggle the runtimedocs decorator off by setting the env variable DISABLE_RUNTIMEDOCS to True.
     
     Parameters
     ----------
@@ -50,7 +51,7 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
     default_type_parser: function
         DEFAULT = runtimedocs.helpers.default_type_parser
         default way to parse the input parameters and returned values.
-        This will take as input for instance one the arguments been passed in to the decorated function and returned
+        This will take as input for instance one the arguments been passed in to the decorated function and return
         an OrderDict with keys: type, value. But also len and keys when relevant.
     max_stringify: int
         DEFAULT = 1000
@@ -112,7 +113,51 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
             logger.info('\t {key} = {val}'.format(key=key, val=val))
         logger.info('-'*5)
 
+    def caller_name(skip=2):
+        """Get a name of a caller in the format module.class.method
+
+           `skip` specifies how many levels of stack to skip while getting caller
+           name. skip=1 means "who calls me", skip=2 "who calls my caller" etc.
+
+           An empty string is returned if skipped levels exceed stack height
+
+           copied from here:
+           https://stackoverflow.com/questions/2654113/python-how-to-get-the-callers-method-name-in-the-called-method
+        """
+        stack = inspect.stack()
+        start = 0 + skip
+        if len(stack) < start + 1:
+            return ''
+        parentframe = stack[start][0]
+
+        name = []
+        module = inspect.getmodule(parentframe)
+        # `modname` can be None when frame is executed directly in console
+        # TODO(techtonik): consider using __main__
+        if module:
+            name.append(module.__name__)
+        # detect classname
+        if 'self' in parentframe.f_locals:
+            # I don't know any way to detect call from the object method
+            # XXX: there seems to be no way to detect static method call - it will
+            #      be just a function call
+            name.append(parentframe.f_locals['self'].__class__.__name__)
+        codename = parentframe.f_code.co_name
+        if codename != '<module>':  # top level usually
+            name.append(codename)  # function or a method
+
+        ## Avoid circular refs and frame leaks
+        #  https://docs.python.org/2.7/library/inspect.html#the-interpreter-stack
+        del parentframe, stack
+
+        return ".".join(name)
+
     def decorate(func):
+        # if the DISABLE_RUNTIMEDOCS env var is True AND the force_enable_runtimedocs flag is False then return the
+        # original non-decorated function.
+        if bool(os.environ.get('DISABLE_RUNTIMEDOCS', False)) and not force_enable_runtimedocs:
+            return func
+
         if not custom_logger_name  or not isinstance(custom_logger_name, str):
             if prefix_module_name_to_logger_name:
                 logger_name = '{module_name}.{func_name}'.format(module_name=__name__, func_name=func.__name__)
@@ -147,6 +192,7 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
         def wrapper(*args, **kwargs):
             logger.info('#'*100)
             logger.info('calling [{}] declared inside module [{}]'.format(func.__name__, __name__))
+            logger.info('caller name: [{}]'.format(caller_name()))
             logger.info('-'*100)
 
             # getting the signature information
@@ -200,18 +246,14 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
                 print_arg(res, logger)
                 return res
 
-        #if the DISABLE_RUNTIMEDOCS env var is True AND the force_enable_runtimedocs flag is False then return the
-        #original non-decorated function.
-        if bool(os.environ.get('DISABLE_RUNTIMEDOCS', False)) and not force_enable_runtimedocs:
-            return func
-        else:
-            return wrapper
+        return wrapper
     return decorate
+
 
 
 if __name__ == '__main__':
     @runtimedocs(verbosity=1)
-    def myadd(a, b, f=sum, unused=1):
+    def myadd(a, b, f=runtimedocs(verbosity=1)(sum), unused=1):
         return f([a, b])
-    myadd(1, 2, sum)
+    myadd(1, 2)
     myadd(1, 2, f=sum)
