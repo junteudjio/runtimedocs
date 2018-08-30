@@ -39,7 +39,43 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
     Additionally they can be printed on the terminal if the verbosity level is set to 1.
     
     You can easily toggle the runtimedocs decorator off by setting the env variable DISABLE_RUNTIMEDOCS to True.
-    
+
+    Usage
+    ----------
+    #import the runtimedocs decorator
+    from runtimedocs import runtimedocs
+
+    #decorate the function/class of your choice
+    @runtimedocs(verbosity=1)
+    def myadd(a, b, f=sum):
+        return f([a, b])
+    myadd(1, 2)
+
+    see the runtime documentation printed on the terminal and save to a file called: __main__.myadd.runtimedocs.log
+    ####################################################################################################
+    calling [myadd] declared inside module [__main__]
+    caller name: [runtimedocs.core]
+    '----------------------------------------------------------------------------------------------------
+    declared signature = myadd(a, b, f=<built-in function sum>)
+    called   signature = myadd(<class 'int'>, <class 'int'>)
+    '----------------------------------------------------------------------------------------------------
+    Number of positional paramters: 2
+        #0:
+         type = <class 'int'>
+         value = 1
+    '-----
+        #1:
+         type = <class 'int'>
+         value = 2
+    '-----
+    Number of key word paramters: 0
+    '----------------------------------------------------------------------------------------------------
+    [myadd] ran successfully in [0.0]seconds and its returned value has these specs:
+         type = <class 'int'>
+         value = 3
+    '-----
+
+
     Parameters
     ----------
     force_enable_runtimedocs: boolean
@@ -256,9 +292,8 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
         return wrapper
     return decorate
 
-# if __name__ == '__main__':
-#     @runtimedocs(verbosity=1)
-#     def myadd(a, b, f=runtimedocs(verbosity=1)(sum), unused=1):
-#         return f([a, b])
-#     myadd(1, 2)
-#     myadd(1, 2, f=sum)
+if __name__ == '__main__':
+    @runtimedocs(verbosity=1, timing_info=False)
+    def myadd(a, b, f=sum):
+        return f([a, b])
+    myadd(1, 2)
