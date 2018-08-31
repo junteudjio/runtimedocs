@@ -286,7 +286,14 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
                     str(round(tac - tic, 4))
                     )
                 )
-                print_arg(res, logger)
+                if isinstance(res, tuple):
+                    logger.info('returned value is a tuple and could be a multi output return statement:')
+                    for i, el in enumerate(res):
+                        logger.info('\t#{}:'.format(i))
+                        print_arg(el, logger)
+                else:
+                    logger.info('single output return statement:')
+                    print_arg(res, logger)
                 return res
 
         return wrapper
