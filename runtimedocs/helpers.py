@@ -18,9 +18,24 @@ except ImportError:
 
 
 def get_type(arg):
+    '''helper function the get the type of an abject as a string.'''
     return str(type(arg))
 
 def default_type_parser(arg, max_stringify=1000):
+    '''
+    default type parser which basically return the repr string of the object.
+    Parameters
+    ----------
+    arg: object to parse
+    max_stringify: how long at max should be the returned string after doing repr(arg)
+
+    Returns
+    -------
+    parsed: OrderedDict('value', ['keys'], ['len'])
+        value: is repr(arg)[:max_stringify]
+        keys: is the the keys in the parsed object and only added to parsed if the object is a dict
+        len: is the the length of the parsed object and only added to parsed if the object is an iterable
+    '''
     parsed = OrderedDict(type=get_type(arg))
     if hasattr(arg, '__len__'):
         parsed['len'] = len(arg)
@@ -31,6 +46,16 @@ def default_type_parser(arg, max_stringify=1000):
 
 
 def function_parser(arg):
+    '''
+    type parser for user defined and builtin functions.
+    Parameters
+    ----------
+    arg: function to parse
+
+    Returns
+    -------
+    parsed: OrderedDict('value', 'signature', 'fullargspec', 'isbuiltin')
+    '''
     parsed = OrderedDict(type=get_type(arg))
     parsed['name'] = arg.__name__
     parsed['signature'] = str(signature_func(arg))
@@ -43,6 +68,16 @@ def function_parser(arg):
     return parsed
 
 def class_parser(arg):
+    '''
+    type parser for user defined and builtin classes.
+    Parameters
+    ----------
+    arg: class to parse
+
+    Returns
+    -------
+    parsed: OrderedDict('value', 'signature', 'fullargspec', 'isbuiltin', 'inheritance_tree)
+    '''
     parsed = function_parser(arg)
     parsed['inheritance_tree'] = inspect.getmro(arg)
     return parsed

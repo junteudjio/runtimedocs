@@ -30,6 +30,7 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
     It provides detailed information about:
      - what was the expected signature of a function/class.
      - where was the function/class declared in and called from.
+     - what's the hostname of the machine running the code.
      - what was the actual signature used when calling that function/class at run time.
      - what are the types, names, values of the input parameters and returned values of that function.
      - when relevant also add specific information like their : len, signature, inheritance_tree, etc ...
@@ -42,42 +43,6 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
     Additionally they can be printed on the terminal if the verbosity level is set to 1.
     
     You can easily toggle the runtimedocs decorator off by setting the env variable DISABLE_RUNTIMEDOCS to True.
-
-    Usage
-    ----------
-    #import the runtimedocs decorator
-    from runtimedocs import runtimedocs
-
-    #decorate the function/class of your choice
-    @runtimedocs(verbosity=1)
-    def myadd(a, b, f=sum):
-        return f([a, b])
-    myadd(1, 2)
-
-    see the runtime documentation printed on the terminal and save to a file called: __main__.myadd.runtimedocs.log
-    ####################################################################################################
-    calling [myadd] declared inside module [__main__]
-    caller name: [runtimedocs.core]
-    '----------------------------------------------------------------------------------------------------
-    declared signature = myadd(a, b, f=<built-in function sum>)
-    called   signature = myadd(<class 'int'>, <class 'int'>)
-    '----------------------------------------------------------------------------------------------------
-    Number of positional paramters: 2
-        #0:
-         type = <class 'int'>
-         value = 1
-    '-----
-        #1:
-         type = <class 'int'>
-         value = 2
-    '-----
-    Number of key word paramters: 0
-    '----------------------------------------------------------------------------------------------------
-    [myadd] ran successfully in [0.0]seconds and its returned value has these specs:
-         type = <class 'int'>
-         value = 3
-    '-----
-
 
     Parameters
     ----------
