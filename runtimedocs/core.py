@@ -3,6 +3,7 @@ import time
 import inspect
 from functools import wraps, partial
 import logging
+import platform
 
 try:
     from collections import ChainMap
@@ -14,6 +15,8 @@ except ImportError:
 
 from runtimedocs import helpers
 from runtimedocs.helpers import get_type
+
+HOSTNAME = platform.node()
 
 def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
                 default_type_parser=helpers.default_type_parser, max_stringify=1000,
@@ -236,6 +239,7 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
             logger.info('#'*100)
             logger.info('calling [{}] declared inside module [{}]'.format(func.__name__, func.__module__))
             logger.info('caller name: [{}]'.format(caller_name()))
+            logger.info('ran inside: hostname=[{}]'.format(HOSTNAME))
             logger.info('-'*100)
 
             # getting the signature information
@@ -301,6 +305,6 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
 
 if __name__ == '__main__':
     @runtimedocs(verbosity=1, timing_info=False)
-    def myadd(a, b, f=sum):
+    def myadd(a, b, f=sum, not_used=None):
         return f([a, b])
-    myadd(1, 2)
+    myadd(1, 2, f=sum)
