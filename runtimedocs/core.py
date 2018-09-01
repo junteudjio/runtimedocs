@@ -7,10 +7,12 @@ import platform
 
 try:
     from collections import ChainMap
+
     signature_func = inspect.signature
 except ImportError:
     from chainmap import ChainMap
     from funcsigs import signature
+
     signature_func = lambda x: str(signature(x))
 
 from runtimedocs import helpers
@@ -18,12 +20,12 @@ from runtimedocs.helpers import get_type
 
 HOSTNAME = platform.node()
 
+
 def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
                 default_type_parser=helpers.default_type_parser, max_stringify=1000,
                 prefix_module_name_to_logger_name=True, custom_logger_name=None, extra_logger_handlers=None,
-                common_types_parsers_dict=helpers.common_types_parsers_dict,  custom_types_parsers_dict=None
+                common_types_parsers_dict=helpers.common_types_parsers_dict, custom_types_parsers_dict=None
                 ):
-
     '''
     runtimedocs decorator helps you understand how your code behaves at runtime.
          It provides detailed information about:
@@ -95,15 +97,16 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
     wrapper: function
         the decorated function/class.
     '''
-    
+
     extra_logger_handlers = extra_logger_handlers if extra_logger_handlers else []
     custom_types_parsers_dict = custom_types_parsers_dict if custom_types_parsers_dict else {}
 
-    #when looking for a parser to parse a value first look at the custom parsers provided by the user of the package
-    #if not found then search in the common types parsers provided natively by the package
+    # when looking for a parser to parse a value first look at the custom parsers provided by the user of the package
+    # if not found then search in the common types parsers provided natively by the package
     # or the runtimedocs-typesparsers plugin
-    #if the type is not found there too then we use the default parser.
+    # if the type is not found there too then we use the default parser.
     types_parsers = ChainMap(custom_types_parsers_dict, common_types_parsers_dict)
+
     def parse_arg(arg):
         parse_func = types_parsers.get(get_type(arg), partial(default_type_parser, max_stringify=max_stringify))
         return parse_func(arg)
@@ -111,7 +114,7 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
     def print_arg(arg, logger):
         for key, val in parse_arg(arg).items():
             logger.info('\t {key} = {val}'.format(key=key, val=val))
-        logger.info('-'*5)
+        logger.info('-' * 5)
 
     def caller_name(skip=2):
         """Get a name of a caller in the format module.class.method
@@ -158,7 +161,7 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
         if bool(os.environ.get('DISABLE_RUNTIMEDOCS', False)) and not force_enable_runtimedocs:
             return func
 
-        if not custom_logger_name  or not isinstance(custom_logger_name, str):
+        if not custom_logger_name or not isinstance(custom_logger_name, str):
             if prefix_module_name_to_logger_name:
                 logger_name = '{module_name}.{func_name}'.format(module_name=__name__, func_name=func.__name__)
             else:
@@ -170,9 +173,9 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
         logger.setLevel(logging.INFO)
 
         if timing_info:
-            formatter = logging.Formatter('%(asctime)s:  %(message)s')
+            formatter = logging.Formatter('%(asctime)s:  #%(message)s')
         else:
-            formatter = logging.Formatter('%(message)s')
+            formatter = logging.Formatter('#%(message)s')
 
         if verbosity > 0:
             stream_handler = logging.StreamHandler()
@@ -187,30 +190,29 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
         for handler in extra_logger_handlers:
             logger.addHandler(handler)
 
-
         @wraps(func)
         def wrapper(*args, **kwargs):
-            logger.info('#'*100)
+            logger.info('#' * 100)
             logger.info('calling [{}] declared inside module [{}]'.format(func.__name__, func.__module__))
             logger.info('caller name: [{}]'.format(caller_name()))
             logger.info('ran inside: hostname=[{}]'.format(HOSTNAME))
-            logger.info('-'*100)
+            logger.info('-' * 100)
 
             # getting the signature information
             args_types = [get_type(el) for el in args]
-            kwargs_types = [(str(k), get_type(v)) for k,v in kwargs.items()]
+            kwargs_types = [(str(k), get_type(v)) for k, v in kwargs.items()]
 
-            all_args_str = ', '.join(args_types + ['{}={}'.format(k, v) for k,v in kwargs_types])
+            all_args_str = ', '.join(args_types + ['{}={}'.format(k, v) for k, v in kwargs_types])
 
             logger.info('declared signature = {func_name}{signature}'.format(
-                func_name = func.__name__,
-                signature = signature_func(func)
+                func_name=func.__name__,
+                signature=signature_func(func)
             ))
             logger.info('called   signature = {func_name}({all_args_str})'.format(
                 func_name=func.__name__,
                 all_args_str=all_args_str
             ))
-            logger.info('-'*100)
+            logger.info('-' * 100)
 
             # get details info about the function paramters
             n_args = len(args)
@@ -226,7 +228,7 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
                 logger.info('\t{}:'.format(arg_name))
                 print_arg(arg, logger)
 
-            logger.info('-'*100)
+            logger.info('-' * 100)
 
             # get details about the return values or the eventual exception raised
             try:
@@ -242,7 +244,7 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
                 logger.info('[{}] ran successfully in [{}]seconds and its returned value has these specs:'.format(
                     func.__name__,
                     str(round(tac - tic, 4))
-                    )
+                )
                 )
                 if isinstance(res, tuple):
                     logger.info('returned value is a tuple and could be a multi output return statement:')
@@ -255,10 +257,14 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
                 return res
 
         return wrapper
+
     return decorate
+
 
 if __name__ == '__main__':
     @runtimedocs(verbosity=1, timing_info=False)
     def myadd(a, b, f=sum, not_used=None):
         return f([a, b])
+
+
     myadd(1, 2, f=sum)

@@ -77,81 +77,81 @@ Quickstart
     >>> #call the decorated function and see the runtime documentation printed on the terminal and saved to a file called: __main__.myadd.runtimedocs.log
     >>> myadd(1, 2)
     ####################################################################################################
-    calling [myadd] declared inside module [__main__]
-    caller name: [runtimedocs.core]
-    ran inside: hostname=[Juniors-MBP.lan]
-    ----------------------------------------------------------------------------------------------------
-    declared signature = myadd(a, b, f=<built-in function sum>, not_used=None)
-    called   signature = myadd(<class 'int'>, <class 'int'>, f=<class 'builtin_function_or_method'>)
-    ----------------------------------------------------------------------------------------------------
-    Number of positional paramters: 2
-        #0:
-         type = <class 'int'>
-         value = 1
-    -----
-        #1:
-         type = <class 'int'>
-         value = 2
-    -----
-    Number of key word paramters: 1
-        f:
-         type = <class 'builtin_function_or_method'>
-         name = sum
-         signature = (iterable, start=0, /)
-         fullargspec = FullArgSpec(args=['iterable', 'start'], varargs=None, varkw=None, defaults=None, kwonlyargs=[], kwonlydefaults=None, annotations={})
-         isbuiltin = True
-    -----
-    ----------------------------------------------------------------------------------------------------
-    [myadd] ran successfully in [0.0]seconds and its returned value has these specs:
-    single output return statement:
-         type = <class 'int'>
-         value = 3
-    -----
+    #calling [myadd] declared inside module [__main__]
+    #caller name: [runtimedocs.core]
+    #ran inside: hostname=[Juniors-MBP.lan]
+    #----------------------------------------------------------------------------------------------------
+    #declared signature = myadd(a, b, f=<built-in function sum>, not_used=None)
+    #called   signature = myadd(<class 'int'>, <class 'int'>, f=<class 'builtin_function_or_method'>)
+    #----------------------------------------------------------------------------------------------------
+    #Number of positional paramters: 2
+    #    #0:
+    #     type = <class 'int'>
+    #     value = 1
+    #-----
+    #    #1:
+    #     type = <class 'int'>
+    #     value = 2
+    #-----
+    #Number of key word paramters: 1
+    #    f:
+    #     type = <class 'builtin_function_or_method'>
+    #     name = sum
+    #     signature = (iterable, start=0, /)
+    #     fullargspec = FullArgSpec(args=['iterable', 'start'], varargs=None, varkw=None, defaults=None, kwonlyargs=[], kwonlydefaults=None, annotations={})
+    #     isbuiltin = True
+    #-----
+    #----------------------------------------------------------------------------------------------------
+    #[myadd] ran successfully in [0.0]seconds and its returned value has these specs:
+    #single output return statement:
+    #     type = <class 'int'>
+    #     value = 3
+    #-----
 
     >>> mysum([1, 2]) #logs printed and saved to a file called: __main__.mysum.runtimedocs.log
-    ####################################################################################################
-    calling [mysum] declared inside module [__main__]
-    caller name: [runtimedocs.core]
-    ran inside: hostname=[Juniors-MBP.lan]
-    ----------------------------------------------------------------------------------------------------
-    declared signature = mysum(elements)
-    called   signature = mysum(<class 'list'>)
-    ----------------------------------------------------------------------------------------------------
-    Number of positional paramters: 1
-        #0:
-         type = <class 'list'>
-         len = 2
-         value = [1, 2]
-    -----
-    Number of key word paramters: 0
-    ----------------------------------------------------------------------------------------------------
-    [mysum] ran successfully in [0.0]seconds and its returned value has these specs:
-    single output return statement:
-         type = <class 'int'>
-         value = 3
-    -----
+    #####################################################################################################
+    #calling [mysum] declared inside module [__main__]
+    #caller name: [runtimedocs.core]
+    #ran inside: hostname=[Juniors-MBP.lan]
+    #----------------------------------------------------------------------------------------------------
+    #declared signature = mysum(elements)
+    #called   signature = mysum(<class 'list'>)
+    #----------------------------------------------------------------------------------------------------
+    #Number of positional paramters: 1
+    #    #0:
+    #     type = <class 'list'>
+    #     len = 2
+    #     value = [1, 2]
+    #-----
+    #Number of key word paramters: 0
+    #----------------------------------------------------------------------------------------------------
+    #[mysum] ran successfully in [0.0]seconds and its returned value has these specs:
+    #single output return statement:
+    #     type = <class 'int'>
+    #     value = 3
+    #-----
 
     >>> mysum(el for el in [1,2])
-    ####################################################################################################
-    calling [mysum] declared inside module [__main__]
-    caller name: [runtimedocs.core]
-    ran inside: hostname=[Juniors-MBP.lan]
-    ----------------------------------------------------------------------------------------------------
-    declared signature = mysum(elements)
-    called   signature = mysum(<class 'generator'>)
-    ----------------------------------------------------------------------------------------------------
-    Number of positional paramters: 1
-        #0:
-         type = <class 'generator'>
-         value = <generator object <genexpr> at 0x107b664f8>
-    -----
-    Number of key word paramters: 0
-    ----------------------------------------------------------------------------------------------------
-    [mysum] ran successfully in [0.0]seconds and its returned value has these specs:
-    single output return statement:
-         type = <class 'int'>
-         value = 3
-    -----
+    ######################################################################################################
+    #calling [mysum] declared inside module [__main__]
+    #caller name: [runtimedocs.core]
+    #ran inside: hostname=[Juniors-MBP.lan]
+    #----------------------------------------------------------------------------------------------------
+    #declared signature = mysum(elements)
+    #called   signature = mysum(<class 'generator'>)
+    #----------------------------------------------------------------------------------------------------
+    #Number of positional paramters: 1
+    #    #0:
+    #     type = <class 'generator'>
+    #     value = <generator object <genexpr> at 0x107b664f8>
+    #-----
+    #Number of key word paramters: 0
+    #----------------------------------------------------------------------------------------------------
+    #[mysum] ran successfully in [0.0]seconds and its returned value has these specs:
+    #single output return statement:
+    #     type = <class 'int'>
+    #     value = 3
+    #-----
 
 
 ------------
@@ -186,27 +186,27 @@ Disable runtimedocs globally but force enable locally:
     ...
     >>> myadd(1, 2) #no logs for myadd
     >>> mysum([1, 2]) #force_enable_runtimedocs is set to True for mysum so runtimedocs will log the function call.
-    ####################################################################################################
-    calling [mysum] declared inside module [__main__]
-    caller name: [runtimedocs.core]
-    ran inside: hostname=[Juniors-MBP.lan]
-    ----------------------------------------------------------------------------------------------------
-    declared signature = mysum(elements)
-    called   signature = mysum(<class 'list'>)
-    ----------------------------------------------------------------------------------------------------
-    Number of positional paramters: 1
-        #0:
-         type = <class 'list'>
-         len = 2
-         value = [1, 2]
-    -----
-    Number of key word paramters: 0
-    ----------------------------------------------------------------------------------------------------
-    [mysum] ran successfully in [0.0]seconds and its returned value has these specs:
-    single output return statement:
-         type = <class 'int'>
-         value = 3
-    -----
+    #####################################################################################################
+    #calling [mysum] declared inside module [__main__]
+    #caller name: [runtimedocs.core]
+    #ran inside: hostname=[Juniors-MBP.lan]
+    #----------------------------------------------------------------------------------------------------
+    #declared signature = mysum(elements)
+    #called   signature = mysum(<class 'list'>)
+    #----------------------------------------------------------------------------------------------------
+    #Number of positional paramters: 1
+    #    #0:
+    #     type = <class 'list'>
+    #     len = 2
+    #     value = [1, 2]
+    #-----
+    #Number of key word paramters: 0
+    #----------------------------------------------------------------------------------------------------
+    #[mysum] ran successfully in [0.0]seconds and its returned value has these specs:
+    #single output return statement:
+    #     type = <class 'int'>
+    #     value = 3
+    #-----
 
 Customizations
 ==============
@@ -231,29 +231,29 @@ Customized how runtimedocs parse a given type:
     ...     return sum(elements)
     ...
     >>> mysum([1,2])
-    ####################################################################################################
-    calling [mysum] declared inside module [__main__]
-    caller name: [runtimedocs.core]
-    ran inside: hostname=[Juniors-MBP.lan]
-    ----------------------------------------------------------------------------------------------------
-    declared signature = mysum(elements)
-    called   signature = mysum(<class 'list'>)
-    ----------------------------------------------------------------------------------------------------
-    Number of positional paramters: 1
-        #0:
-         bar = bar
-         foo = foo
-         mylist_type = <class 'list'>
-         mylist_len = 2
-         mylist_repr = [1, 2]
-    -----
-    Number of key word paramters: 0
-    ----------------------------------------------------------------------------------------------------
-    [mysum] ran successfully in [0.0]seconds and its returned value has these specs:
-    single output return statement:
-         type = <class 'int'>
-         value = 3
-    -----
+    #####################################################################################################
+    #calling [mysum] declared inside module [__main__]
+    #caller name: [runtimedocs.core]
+    #ran inside: hostname=[Juniors-MBP.lan]
+    #----------------------------------------------------------------------------------------------------
+    #declared signature = mysum(elements)
+    #called   signature = mysum(<class 'list'>)
+    #----------------------------------------------------------------------------------------------------
+    #Number of positional paramters: 1
+    #    #0:
+    #     bar = bar
+    #     foo = foo
+    #     mylist_type = <class 'list'>
+    #     mylist_len = 2
+    #     mylist_repr = [1, 2]
+    #-----
+    #Number of key word paramters: 0
+    #----------------------------------------------------------------------------------------------------
+    #[mysum] ran successfully in [0.0]seconds and its returned value has these specs:
+    #single output return statement:
+    #     type = <class 'int'>
+    #     value = 3
+    #-----
 
 Aggregate all the logs for multiple functions in a same file:
 
@@ -275,58 +275,55 @@ Aggregate all the logs for multiple functions in a same file:
     >>> mysum([1,2])
     >>> myadd(1, 2, f=sum)
     >>> # content of aggregation.runtimedocs.log :
-    ####################################################################################################
-    calling [myadd] declared inside module [__main__]
-    caller name: [runtimedocs.core]
-    ran inside: hostname=[Juniors-MBP.lan]
-    ----------------------------------------------------------------------------------------------------
-    declared signature = myadd(a, b, f=<built-in function sum>, not_used=None)
-    called   signature = myadd(<class 'int'>, <class 'int'>, f=<class 'builtin_function_or_method'>)
-    ----------------------------------------------------------------------------------------------------
-    Number of positional paramters: 2
-        #0:
-         type = <class 'int'>
-         value = 1
-    -----
-        #1:
-         type = <class 'int'>
-         value = 2
-    -----
-    Number of key word paramters: 1
-        f:
-         type = <class 'builtin_function_or_method'>
-         name = sum
-         signature = (iterable, start=0, /)
-         fullargspec = FullArgSpec(args=['iterable', 'start'], varargs=None, varkw=None, defaults=None, kwonlyargs=[], kwonlydefaults=None, annotations={})
-         isbuiltin = True
-    -----
-    ----------------------------------------------------------------------------------------------------
-    [myadd] ran successfully in [0.0]seconds and its returned value has these specs:
-    single output return statement:
-         type = <class 'int'>
-         value = 3
-    -----
-    ####################################################################################################
-    calling [mysum] declared inside module [__main__]
-    caller name: [runtimedocs.core]
-    ran inside: hostname=[Juniors-MBP.lan]
-    ----------------------------------------------------------------------------------------------------
-    declared signature = mysum(elements)
-    called   signature = mysum(<class 'list'>)
-    ----------------------------------------------------------------------------------------------------
-    Number of positional paramters: 1
-        #0:
-         type = <class 'list'>
-         len = 2
-         value = [1, 2]
-    -----
-    Number of key word paramters: 0
-    ----------------------------------------------------------------------------------------------------
-    [mysum] ran successfully in [0.0]seconds and its returned value has these specs:
-    single output return statement:
-         type = <class 'int'>
-         value = 3
-    -----
-
-Further documentation can be found at `runtimedocs.readthedocs.org <http://runtimedocs.readthedocs.org/en/latest/>`_
-
+    #####################################################################################################
+    #calling [myadd] declared inside module [__main__]
+    #caller name: [runtimedocs.core]
+    #ran inside: hostname=[Juniors-MBP.lan]
+    #----------------------------------------------------------------------------------------------------
+    #declared signature = myadd(a, b, f=<built-in function sum>, not_used=None)
+    #called   signature = myadd(<class 'int'>, <class 'int'>, f=<class 'builtin_function_or_method'>)
+    #----------------------------------------------------------------------------------------------------
+    #Number of positional paramters: 2
+    #    #0:
+    #     type = <class 'int'>
+    #     value = 1
+    #-----
+    #    #1:
+    #     type = <class 'int'>
+    #     value = 2
+    #-----
+    #Number of key word paramters: 1
+    #    f:
+    #     type = <class 'builtin_function_or_method'>
+    #     name = sum
+    #     signature = (iterable, start=0, /)
+    #     fullargspec = FullArgSpec(args=['iterable', 'start'], varargs=None, varkw=None, defaults=None, kwonlyargs=[], kwonlydefaults=None, annotations={})
+    #     isbuiltin = True
+    #-----
+    #----------------------------------------------------------------------------------------------------
+    #[myadd] ran successfully in [0.0]seconds and its returned value has these specs:
+    #single output return statement:
+    #     type = <class 'int'>
+    #     value = 3
+    #-----
+    #####################################################################################################
+    #calling [mysum] declared inside module [__main__]
+    #caller name: [runtimedocs.core]
+    #ran inside: hostname=[Juniors-MBP.lan]
+    #----------------------------------------------------------------------------------------------------
+    #declared signature = mysum(elements)
+    #called   signature = mysum(<class 'list'>)
+    #----------------------------------------------------------------------------------------------------
+    #Number of positional paramters: 1
+    #    #0:
+    #     type = <class 'list'>
+    #     len = 2
+    #     value = [1, 2]
+    #-----
+    #Number of key word paramters: 0
+    #----------------------------------------------------------------------------------------------------
+    #[mysum] ran successfully in [0.0]seconds and its returned value has these specs:
+    #single output return statement:
+    #     type = <class 'int'>
+    #     value = 3
+    #-----
