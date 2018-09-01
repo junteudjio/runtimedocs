@@ -2,7 +2,7 @@
 runtimedocs:  understand how your code behaves at runtime
 =========================================================
 
-.. image:: https://travis-ci.org/junteudjio/runtimedocs.svg
+.. image:: https://travis-ci.com/junteudjio/runtimedocs.svg?branch=develop
    :alt: build status
    :target: https://travis-ci.org/junteudjio/runtimedocs
 
