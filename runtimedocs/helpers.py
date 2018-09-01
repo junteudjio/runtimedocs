@@ -24,6 +24,7 @@ def get_type(arg):
 def default_type_parser(arg, max_stringify=1000):
     '''
     default type parser which basically return the repr string of the object.
+
     Parameters
     ----------
     arg: object to parse
@@ -48,6 +49,7 @@ def default_type_parser(arg, max_stringify=1000):
 def function_parser(arg):
     '''
     type parser for user defined and builtin functions.
+
     Parameters
     ----------
     arg: function to parse
