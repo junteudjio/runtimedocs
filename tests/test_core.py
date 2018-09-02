@@ -129,3 +129,32 @@ def test_multi_return_output(mock_open, mock_getLogger, func_return_value, func)
             [mock.call('single output return statement:')])
 
 
+@pytest.mark.parametrize('custom_logger_name', [None, '',  'my-custom-logger'])
+@pytest.mark.parametrize('prefix_module_name_to_logger_name', [True, False])
+@mock.patch('runtimedocs.core.logging.getLogger', autospec=True)
+@mock.patch('{builtin}.open'.format(builtin=builtin_str))
+def test_custom_logger_name(mock_open, mock_getLogger, custom_logger_name,  prefix_module_name_to_logger_name,  func):
+    # arrange
+    decorated_func = \
+        runtimedocs.core.runtimedocs(custom_logger_name=custom_logger_name,
+                                     prefix_module_name_to_logger_name=prefix_module_name_to_logger_name)(func)
+
+    # call
+    decorated_func()
+
+    # assert
+    assert mock_getLogger.call_count == 1
+
+    #if the custom_logger_name is specified correctly it takes priority over the default logger name
+    if not custom_logger_name or not isinstance(custom_logger_name, str):
+        if prefix_module_name_to_logger_name:
+            mock_getLogger. \
+                assert_called_once_with('{module_name}.{func_name}'.format(module_name='runtimedocs.core',
+                                                                           func_name=func.__name__))
+        else:
+            mock_getLogger.assert_called_once_with('{func_name}'.format(func_name=func.__name__))
+    else:
+        mock_getLogger.assert_called_once_with(custom_logger_name)
+
+
+
