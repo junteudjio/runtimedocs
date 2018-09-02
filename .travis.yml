@@ -3,10 +3,14 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
-  #- "3.7"
 # command to install dependencies
 install:
-  - pip install -r requirements.txt
-  - pip install .
+  - pip install -r requirements/tests.txt
+  - python setup.py install
 # command to run tests
-script: pytest --cov=runtimedocs tests/
+script:
+  - tox
+  - coverage run --source=runtimedocs -m py.test
+  - coverage report -m
+after_success:
+  - coveralls

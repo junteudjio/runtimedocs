@@ -53,6 +53,5 @@ setup(
     packages=['runtimedocs'],
     include_package_data=True,
     install_requires=reqs,
-    tests_require=['tox']
 )
 
