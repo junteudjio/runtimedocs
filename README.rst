@@ -12,9 +12,13 @@ runtimedocs:  understand how your code behaves at runtime
 
 
 .. image:: https://img.shields.io/pypi/v/runtimedocs.svg
-   :target: https://pypi.python.org/pypi/runtimedocs
+   :target: https://pypi.org/pypi/runtimedocs
    :alt: downloads
-        
+
+.. image:: https://img.shields.io/pypi/pyversions/runtimedocs.svg
+   :target: https://pypi.org/pypi/runtimedocs
+   :alt: downloads
+
 Documentation: `runtimedocs.readthedocs.org <http://runtimedocs.readthedocs.org/en/latest/>`_
 ---------------------------------------------------------------------------------
 
