@@ -6,9 +6,10 @@ runtimedocs:  understand how your code behaves at runtime
    :alt: build status
    :target: https://travis-ci.org/junteudjio/runtimedocs
 
-.. image:: https://codecov.io/github/junteudjio/runtimedocs/coverage.svg?branch=master
-   :target: https://codecov.io/github/junteudjio/runtimedocs
-   :alt: Codecov
+.. image:: https://coveralls.io/repos/github/junteudjio/runtimedocs/badge.svg?branch=develop
+   :alt: coverage
+   :target: https://coveralls.io/github/junteudjio/runtimedocs?branch=develop
+
 
 .. image:: https://img.shields.io/pypi/v/runtimedocs.svg
    :target: https://pypi.python.org/pypi/runtimedocs
