@@ -267,7 +267,7 @@ Aggregate all the logs for multiple functions in a same file:
     >>> def myadd(a, b, f=sum, not_used=None):
     ...     return f([a, b])
     ...
-
+    >>> #even faster, you can also directly pass the string as an extra_hanlder
     >>> @runtimedocs(extra_logger_handlers=[file_handler])
     >>> def mysum(elements):
     ...     return sum(elements)
