@@ -48,3 +48,24 @@ def test_class_parser():
     assert 'fullargspec' in parsed
     assert 'isbuiltin' in parsed
     assert 'inheritance_tree' in parsed
+
+def test_caller_name():
+    def outer():
+        def middle():
+            my_direct_caller = runtimedocs.helpers.caller_name(skip=2)
+            assert my_direct_caller == 'tests.test_helpers.outer'
+
+            def inner():
+                my_direct_caller = runtimedocs.helpers.caller_name(skip=2)
+                assert my_direct_caller == 'tests.test_helpers.middle'
+
+                my_caller_caller = runtimedocs.helpers.caller_name(skip=3)
+                assert my_caller_caller == 'tests.test_helpers.outer'
+
+            inner()
+
+        middle()
+
+    outer()
+
+
