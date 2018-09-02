@@ -41,6 +41,19 @@ if sys.version_info < (3,):
 else:
     reqs = []
 
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Utilities",
+] + [
+    ("Programming Language :: Python :: %s" % x)
+    for x in "3 3.4 3.5 3.6 3.7".split()
+]
+
 setup(
     name='runtimedocs',
     version=grep('__version__'),
@@ -53,11 +66,6 @@ setup(
     packages=['runtimedocs'],
     include_package_data=True,
     install_requires=reqs,
-    classifiers=[
-        "Development Status :: 5 - Production/Stable"
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-    ],
+    classifiers=classifiers
 )
 
