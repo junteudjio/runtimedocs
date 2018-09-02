@@ -133,7 +133,7 @@ def test_multi_return_output(mock_open, mock_getLogger, func_return_value, func)
 @pytest.mark.parametrize('prefix_module_name_to_logger_name', [True, False])
 @mock.patch('runtimedocs.core.logging.getLogger', autospec=True)
 @mock.patch('{builtin}.open'.format(builtin=builtin_str))
-def test_custom_logger_name(mock_open, mock_getLogger, custom_logger_name,  prefix_module_name_to_logger_name,  func):
+def test_custom_logger_name(mock_open, mock_getLogger, prefix_module_name_to_logger_name, custom_logger_name,  func):
     # arrange
     decorated_func = \
         runtimedocs.core.runtimedocs(custom_logger_name=custom_logger_name,
