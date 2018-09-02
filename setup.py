@@ -53,5 +53,11 @@ setup(
     packages=['runtimedocs'],
     include_package_data=True,
     install_requires=reqs,
+    classifiers=[
+        "Development Status :: 5 - Production/Stable"
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
 )
 
