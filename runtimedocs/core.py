@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 import inspect
 from functools import wraps, partial
@@ -178,7 +179,7 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
             formatter = logging.Formatter('#%(message)s')
 
         if verbosity > 0:
-            stream_handler = logging.StreamHandler()
+            stream_handler = logging.StreamHandler(sys.stdout)
             stream_handler.setFormatter(formatter)
             logger.addHandler(stream_handler)
 

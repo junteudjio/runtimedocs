@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import os
+from io import StringIO
+
 import pytest
 
 from .context import mock, builtin_str, runtimedocs
@@ -20,14 +22,14 @@ def test_disable_runtimedocs_env_var(mock_open, force_enable_runtimedocs, func):
     if force_enable_runtimedocs:
         #if DISABLE_RUNTIMEDOCS and force_enable_runtimedocs is True then we should call the runtimedocs decorator
         #and that decorator uses the logging module which should write at least one file to the file system.
-        mock_open.assert_called()
+        assert mock_open.call_count > 0
     else:
         # otherwise the original function will not be decorated
-        mock_open.assert_not_called()
+        assert mock_open.call_count == 0
 
 
 @pytest.mark.parametrize('verbosity', [0, 1])
-@mock.patch('sys.stdout')
+@mock.patch('sys.stdout', new_callable=StringIO)
 @mock.patch('{builtin}.open'.format(builtin=builtin_str))
 def test_verbosity_level(mock_open, mock_stdout, verbosity, func):
     #arrange
@@ -38,9 +40,9 @@ def test_verbosity_level(mock_open, mock_stdout, verbosity, func):
 
     #assert
     if verbosity == 0:
-        mock_stdout.assert_not_called
+        assert mock_stdout.getvalue() == ''
     else:
-        mock_stdout.assert_called
+        assert mock_stdout.getvalue() != ''
 
 @pytest.mark.parametrize('exception_to_raise', [ValueError, ZeroDivisionError, NameError])
 @mock.patch('{builtin}.open'.format(builtin=builtin_str))
