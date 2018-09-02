@@ -2,6 +2,7 @@
 
 import os
 from io import StringIO
+import logging
 
 import pytest
 
@@ -67,6 +68,23 @@ def test_custom_logger_name(mock_open, func):
     # assert
     saved_filepath = os.path.join(os.getcwd(), 'custom_logger_name.runtimedocs.log')
     mock_open.assert_called_once_with(saved_filepath, 'a', encoding=None)
+
+
+@pytest.mark.parametrize('timing_info', [True, False])
+@mock.patch('runtimedocs.core.logging.Formatter', autospec=True)
+@mock.patch('{builtin}.open'.format(builtin=builtin_str))
+def test_timing_info_and_format(mock_open, mock_formatter_init, timing_info, func):
+    # arrange
+    decorated_func = runtimedocs.core.runtimedocs(timing_info=timing_info)(func)
+
+    # call
+    decorated_func()
+
+    # assert
+    if timing_info:
+        mock_formatter_init.assert_called_once_with(fmt='%(asctime)s:  #%(message)s')
+    else:
+        mock_formatter_init.assert_called_once_with(fmt='#%(message)s')
 
 
 
