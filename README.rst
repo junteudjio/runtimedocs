@@ -2,11 +2,11 @@
 runtimedocs:  understand how your code behaves at runtime
 =========================================================
 
-.. image:: https://travis-ci.com/junteudjio/runtimedocs.svg?branch=develop
+.. image:: https://travis-ci.com/junteudjio/runtimedocs.svg
    :alt: build status
    :target: https://travis-ci.org/junteudjio/runtimedocs
 
-.. image:: https://coveralls.io/repos/github/junteudjio/runtimedocs/badge.svg?branch=develop
+.. image:: https://coveralls.io/repos/github/junteudjio/runtimedocs/badge.svg
    :alt: coverage
    :target: https://coveralls.io/github/junteudjio/runtimedocs?branch=develop
 
@@ -20,7 +20,7 @@ runtimedocs:  understand how your code behaves at runtime
    :alt: downloads
 
 Documentation: `runtimedocs.readthedocs.org <http://runtimedocs.readthedocs.org/en/latest/>`_
----------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
 
 -----
 What?
@@ -332,3 +332,36 @@ Aggregate all the logs for multiple functions in a same file:
     #     type = <class 'int'>
     #     value = 3
     #-----
+
+Documentation/Api
+-----------------
+
+Further documentation can be found at `runtimedocs.readthedocs.org <http://runtimedocs.readthedocs.org/en/latest/>`_
+
+
+Bugs/Requests
+-------------
+
+Please use the `GitHub issue tracker <https://github.com/junteudjio/runtimedocs/issues>`_ to submit bugs or request features.
+
+
+Todos
+-----
+
+Add changes to hanle Python2.
+
+
+Contributing
+------------
+
+Contributions are welcome, especially with custom type parsers.  See `runtimedocs_types_parsers <https://github.com/junteudjio/runtimedocs_types_parsers>`_ for what's currently supported.
+
+
+License
+-------
+
+Copyright Junior Teudjio Mbativou, 2018.
+
+Distributed under the terms of the `MIT`_ license, runtimedocs is free and open source software.
+
+.. _`MIT`: https://github.com/junteudjio/runtimedocs/blob/master/LICENSE
