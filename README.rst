@@ -348,7 +348,7 @@ Please use the `GitHub issue tracker <https://github.com/junteudjio/runtimedocs/
 Todos
 -----
 
-Add changes to hanle Python2.
+Add changes to handle Python2.
 
 
 Contributing
@@ -362,6 +362,6 @@ License
 
 Copyright Junior Teudjio Mbativou, 2018.
 
-Distributed under the terms of the `MIT`_ license, runtimedocs is free and open source software.
+Distributed under the terms of the `MIT`_ license, runtimedocs is a free and open source software.
 
 .. _`MIT`: https://github.com/junteudjio/runtimedocs/blob/master/LICENSE
