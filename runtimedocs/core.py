@@ -117,45 +117,6 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
             logger.info('\t {key} = {val}'.format(key=key, val=val))
         logger.info('-' * 5)
 
-    def caller_name(skip=2):
-        """Get a name of a caller in the format module.class.method
-
-           `skip` specifies how many levels of stack to skip while getting caller
-           name. skip=1 means "who calls me", skip=2 "who calls my caller" etc.
-
-           An empty string is returned if skipped levels exceed stack height
-
-           copied from here:
-           https://stackoverflow.com/questions/2654113/python-how-to-get-the-callers-method-name-in-the-called-method
-        """
-        stack = inspect.stack()
-        start = 0 + skip
-        if len(stack) < start + 1:
-            return ''
-        parentframe = stack[start][0]
-
-        name = []
-        module = inspect.getmodule(parentframe)
-        # `modname` can be None when frame is executed directly in console
-        # TODO(techtonik): consider using __main__
-        if module:
-            name.append(module.__name__)
-        # detect classname
-        if 'self' in parentframe.f_locals:
-            # I don't know any way to detect call from the object method
-            # XXX: there seems to be no way to detect static method call - it will
-            #      be just a function call
-            name.append(parentframe.f_locals['self'].__class__.__name__)
-        codename = parentframe.f_code.co_name
-        if codename != '<module>':  # top level usually
-            name.append(codename)  # function or a method
-
-        ## Avoid circular refs and frame leaks
-        #  https://docs.python.org/2.7/library/inspect.html#the-interpreter-stack
-        del parentframe, stack
-
-        return ".".join(name)
-
     def decorate(func):
         # if the DISABLE_RUNTIMEDOCS env var is True AND the force_enable_runtimedocs flag is False then return the
         # original non-decorated function.
@@ -195,7 +156,7 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
         def wrapper(*args, **kwargs):
             logger.info('#' * 100)
             logger.info('calling [{}] declared inside module [{}]'.format(func.__name__, func.__module__))
-            logger.info('caller name: [{}]'.format(caller_name()))
+            logger.info('caller name: [{}]'.format(helpers.caller_name()))
             logger.info('ran inside: hostname=[{}]'.format(HOSTNAME))
             logger.info('-' * 100)
 
