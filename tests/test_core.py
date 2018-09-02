@@ -87,6 +87,25 @@ def test_timing_info_and_format(mock_open, mock_formatter_init, timing_info, fun
         mock_formatter_init.assert_called_once_with(fmt='#%(message)s')
 
 
+@mock.patch('runtimedocs.core.logging.getLogger', autospec=True)
+@mock.patch('{builtin}.open'.format(builtin=builtin_str))
+def test_add_extra_handler(mock_open, mock_getLogger, func):
+    # arrange
+    dummy_handlers = [
+        logging.FileHandler('dummy-handler-1.log'),
+        logging.FileHandler('dummy-handler-2.log')
+    ]
+    # we pass verbosity=True to enforce that addHandler is also called for the streamHandler
+    # so in total the addHanlder will be called 4 times:1 for the streamhandler / 1 for the default file handler
+    # and 2 times for each of the extra dummy filehandlers
+    decorated_func = runtimedocs.core.runtimedocs(verbosity=True, extra_logger_handlers=dummy_handlers)(func)
+
+    # call
+    decorated_func()
+
+    # assert
+    assert mock_getLogger.call_count == 1
+    assert mock_getLogger().addHandler.call_count == 2 + len(dummy_handlers)
 
 
 
