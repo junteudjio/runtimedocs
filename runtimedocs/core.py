@@ -222,11 +222,10 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
 
     return decorate
 
-
-if __name__ == '__main__':
-    @runtimedocs(verbosity=1, timing_info=False)
-    def myadd(a, b, f=sum, not_used=None):
-        return f([a, b])
-
-
-    myadd(1, 2, f=sum)
+# if __name__ == '__main__':
+#     @runtimedocs(verbosity=1, timing_info=False)
+#     def myadd(a, b, f=sum, not_used=None):
+#         return f([a, b])
+#
+#
+#     myadd(1, 2, f=sum)

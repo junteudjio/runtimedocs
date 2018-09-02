@@ -116,7 +116,8 @@ def test_multi_return_output(mock_open, mock_getLogger, func_return_value, func)
     decorated_func = runtimedocs.core.runtimedocs()(func)
 
     # call
-    decorated_func()
+    # adeed foo and bar params just to increase test coverage
+    decorated_func('foo', bar='bar')
 
     # assert
     assert mock_getLogger.call_count == 1
