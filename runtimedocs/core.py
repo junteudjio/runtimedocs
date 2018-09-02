@@ -77,6 +77,7 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
         being extracted. This could be useful for example to centralized all the logged info in a single file or
         group of files since by default every function in every module has its own log file.
         Note that, this allows you to add additional handlers, not overrides the default one.
+        Also each handler of the list could be a string or a custom instance of logging.FileHandler()
     common_types_parsers_dict: dict | DEFAULT = helpers.common_types_parsers_dict
         this parameter allows you to bypass the default_type_parser for certain specific builtin python types
         it is a dictionary with keys representing the type as str and the parsing functions as values.
@@ -150,7 +151,13 @@ def runtimedocs(force_enable_runtimedocs=False, verbosity=0, timing_info=True,
         logger.addHandler(file_handler)
 
         for handler in extra_logger_handlers:
-            logger.addHandler(handler)
+            if isinstance(handler, str):
+                file_handler = logging.FileHandler(handler)
+                file_handler.setLevel(logging.INFO)
+                file_handler.setFormatter(formatter)
+                logger.addHandler(file_handler)
+            else:
+                logger.addHandler(handler)
 
         @wraps(func)
         def wrapper(*args, **kwargs):
