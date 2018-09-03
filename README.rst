@@ -80,7 +80,7 @@ Quickstart
     ...     return sum(elements)
     ...
     >>> #call the decorated function and see the runtime documentation printed on the terminal and saved to a file called: __main__.myadd.runtimedocs.log
-    >>> myadd(1, 2)
+    >>> myadd(1, 2, f=sum)
     ####################################################################################################
     #calling [myadd] declared inside module [__main__]
     #caller name: [runtimedocs.core]
