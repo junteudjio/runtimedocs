@@ -335,7 +335,7 @@ Aggregate all the logs for multiple functions in a same file:
 API Guide
 ---------
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 4
 
    modules
 
