@@ -14,7 +14,7 @@ runtimedocs:  understand how your code behaves at runtime
 
 .. image:: https://coveralls.io/repos/github/junteudjio/runtimedocs/badge.svg
    :alt: coverage
-   :target: https://coveralls.io/github/junteudjio/runtimedocs?branch=develop
+   :target: https://coveralls.io/github/junteudjio/runtimedocs
 
 
 .. image:: https://img.shields.io/pypi/v/runtimedocs.svg
