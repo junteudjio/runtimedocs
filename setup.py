@@ -13,8 +13,6 @@ except ImportError:
 with open('README.rst') as f:
     readme = f.read()
 
-with open('LICENSE') as f:
-    license = f.read()
 
 def fpath(name):
     return os.path.join(os.path.dirname(__file__), name)
@@ -62,7 +60,7 @@ setup(
     author='Junior Teudjio',
     author_email='jun.teudjio@gmail.com',
     url='https://github.com/junteudjio/runtimedocs',
-    license=license,
+    license='MIT',
     packages=['runtimedocs'],
     include_package_data=True,
     install_requires=reqs,
