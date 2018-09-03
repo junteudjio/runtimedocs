@@ -71,7 +71,7 @@ Quickstart
     >>> from runtimedocs import runtimedocs
 
     >>> #decorate the function/class of your choice
-    >>> @runtimedocs(verbosity=1, timing_info=False) #verbosity=1 means also print the logs on terminal. timing_info=False means don't log time.
+    >>> @runtimedocs(verbosity=1, timing_info=False, not_used=None) #verbosity=1 means also print the logs on terminal. timing_info=False means don't log time.
     ... def myadd(a, b, f=sum):
     ...     return f([a, b])
     ...
